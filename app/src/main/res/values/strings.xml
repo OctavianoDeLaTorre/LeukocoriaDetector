@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Detector de retinoblastoma</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="Camara">Camara</string>
+    <string name="Galeria">Galeria</string>
+    <string name="Cargar_imagenes">Cargar imagen:</string>
+    <string name="Opciones">Opciones de imagen:</string>
+    <string name="Compartir">Compartir</string>
+    <string name="Guardar">Guardar</string>
+    <string name="Ajustes">Ajustes</string>
+    <string name="Ayuda">Ayuda</string>
+    <string name="Acerca">Acerca de</string>
+
+    <string name="Deteccion">Detector de retinoblastoma</string>
+    <string name="seleccionarIMG">Seleccione una fotografía:</string>
+    <string name="imagnen_guardada">Imagen guadada en galería</string>
+    <string name="imagnen_no_guardada">Ocurrió un error al cargar la fotografía</string>
+    <string name="imagen_null">No hay imagen para guardar</string>
+    <string name="imagen_no_cargada">Ocurrió un error al cargar la fotografía</string>
+    <string name="selecciona_una_app">Elige una aplicación:</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="que_es_el_retinoblastoma">¿Que es el Retinoblastoma?</string>
+    <string name="el_retinoblastoma_es">El retinoblastoma es un tumor canceroso que se desarrolla en la retina causado por una mutación en la proteína Rb, codificada por un gen supresor tumoral denominado RB1</string>
+    <string name="como_puede_detectarse">¿Como puede detectarse?</string>
+    <string name="puede_notarse">Puede notarse si la pupila se ve blanca cuando se ilumina el ojo, por ejemplo con el flash de una fotografía. Este sintoma es conocido como leucocoria.</string>
+    <string name="tratamientos">Tratamientos</string>
+    <string name="los_tratamientos">Los tratamientos incluyen quimioterapia, radioterapia y terapia de láser.</string>
+    <string name="que_es_la_leucocoria">¿Que es la leucocoria?</string>
+    <string name="la_leucocoria">La leucocoria se refiere a un signo clínico caracterizado por la aparición de un reflejo o mancha blanca en la región pupilar. También se le llama pupila blanca.</string>
+    <string name="ojo_con_leucocoria">Ejemplo de ojo con leucocoria</string>
+
+</resources>

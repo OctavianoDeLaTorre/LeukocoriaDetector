@@ -1,0 +1,2 @@
+include ':app', ':photography', ':imageprocessing', ':analyzecolor'
+include ':openCVLibrary410'

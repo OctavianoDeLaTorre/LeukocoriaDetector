@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item android:title="@string/Cargar_imagenes">
+        <menu>
+            <item
+                android:id="@+id/nav_camera"
+                android:icon="@android:drawable/ic_menu_camera"
+                android:title="@string/Camara" />
+            <item
+                android:id="@+id/nav_gallery"
+                android:icon="@android:drawable/ic_menu_gallery"
+                android:title="@string/Galeria" />
+
+        </menu>
+    </item>
+
+    <item android:title="@string/Opciones">
+        <menu>
+            <item
+                android:id="@+id/nav_save"
+                android:icon="@android:drawable/ic_menu_save"
+                android:title="@string/Guardar" />
+
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@android:drawable/ic_menu_share"
+                android:title="@string/Compartir" />
+
+        </menu>
+    </item>
+    <item
+
+        android:title="_______________________________________________________" />
+
+
+    <item
+        android:id="@+id/nav_manage"
+        android:icon="@android:drawable/ic_menu_manage"
+        android:title="@string/Ajustes" />
+    <item
+        android:id="@+id/nav_ayuda"
+        android:icon="@android:drawable/ic_menu_help"
+        android:title="@string/Ayuda" />
+    <item
+        android:id="@+id/nav_acerca"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:title="@string/Acerca" />
+
+</menu>
