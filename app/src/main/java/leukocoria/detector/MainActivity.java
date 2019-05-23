@@ -32,6 +32,9 @@ import org.opencv.android.OpenCVLoader;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static final String REQUEST_RESULT="REQUEST_RESULT";
+    public static final String IMAGE_URI ="imageUri";
+    public static final int REQUEST_CODE_CROP_IMAGE = 666;
     private Photography photography;
     private ImageView ivImage;
     private Bitmap imageBitmap;
@@ -150,26 +153,47 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+
         if(resultCode == RESULT_OK){
-            if ( requestCode == Photography.REQUEST_CODE_GALLERY){
-                if (photography.getBitmat(data)) {
-                    imageBitmap = photography.getFotografia();
 
-                    ivImage.setImageBitmap(imageBitmap);
-                } else {
-                    Toast.makeText(MainActivity.this,
-                            R.string.imagen_no_cargada,
-                            Toast.LENGTH_SHORT
-                    ).show();
-                }
+            switch (requestCode){
 
-            } else if (requestCode == Photography.REQUEST_CODE_CAMERA){
-                Bundle extras = data.getExtras();
-                photography.setFotografia((Bitmap) extras.get("data"));
+                case Photography.REQUEST_CODE_GALLERY :
+                    if (photography.getBitmat(data)) {
+                        imageBitmap = photography.getFotografia();
+                        startActivityCropImage(imageBitmap);
+                    } else {
+                        Toast.makeText(MainActivity.this,
+                                R.string.imagen_no_cargada,
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    }
+                    break;
 
-                ivImage.setImageBitmap(photography.getFotografia());
+                case Photography.REQUEST_CODE_CAMERA:
+                    Bundle extras = data.getExtras();
+                    photography.setFotografia((Bitmap) extras.get("data"));
+                    startActivityCropImage(photography.getFotografia());
+                    break;
+
+                case REQUEST_CODE_CROP_IMAGE:
+                    Bundle extra = data.getExtras();
+                    photography.setFotografia((Bitmap) extra.get(REQUEST_RESULT));
+                    ivImage.setImageBitmap(photography.getFotografia());
+                    break;
+
+                    default:
+                        break;
             }
         }
+
+    }
+
+    public void startActivityCropImage(Bitmap imageBitmap){
+        Intent intent = new Intent(this, CropImageActivity.class);
+        intent.putExtra(IMAGE_URI,photography.getImageUri(imageBitmap).toString());
+        startActivityForResult(intent,REQUEST_CODE_CROP_IMAGE);
     }
 
 }

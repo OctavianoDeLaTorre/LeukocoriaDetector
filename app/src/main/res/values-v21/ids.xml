@@ -1,4 +1,6 @@
 <resources>
     <item name="fab_action_crop" type="id" />
     <item name="fab_action_cancel_crop" type="id" />
+    <item name="fab_action_turn_right" type="id" />
+    <item name="fab_action_turn_left" type="id" />
 </resources>

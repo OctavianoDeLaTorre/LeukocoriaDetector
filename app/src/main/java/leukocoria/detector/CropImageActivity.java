@@ -1,11 +1,12 @@
 package leukocoria.detector;
 
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.isseiaoki.simplecropview.CropImageView;
@@ -19,16 +20,16 @@ import com.photography.Photography;
 public class CropImageActivity extends AppCompatActivity implements SpeedDialView.OnActionSelectedListener{
 
     private CropImageView mCropView;
-    private
-    LoadCallback loadCallback = new LoadCallback() {
+    private LoadCallback loadCallback = new LoadCallback() {
         @Override
         public void onSuccess() {
+            Snackbar.make(mCropView, "Es recomendable recortar la fotografía para facilitar el análisis", Snackbar.LENGTH_LONG).show();
 
         }
 
         @Override
         public void onError(Throwable e) {
-
+            Snackbar.make(mCropView, "Ocurrió un error al cargar la fotografía.", Snackbar.LENGTH_LONG).show();
         }
     };
 
@@ -36,28 +37,35 @@ public class CropImageActivity extends AppCompatActivity implements SpeedDialVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crop_image);
+        Uri imageUri;
+        if (getIntent() != null && getIntent().hasExtra(MainActivity.IMAGE_URI)) {
+            imageUri = Uri.parse(getIntent().getStringExtra(MainActivity.IMAGE_URI));
+        } else {
+            imageUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.ojo);
+        }
 
         mCropView = findViewById(R.id.cropImageView);
 
-        final Uri uriImagen = Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.ojo);
-
-
-
-        mCropView.load(uriImagen).execute(loadCallback);
+        mCropView.load(imageUri).execute(loadCallback);
 
 
         SpeedDialView speedDialView = findViewById(R.id.speedDial);
 
+        speedDialView.addActionItem(new SpeedDialActionItem.Builder(R.id.fab_action_turn_right,
+                R.drawable.crop_image)
+                .setLabel(R.string.turn_right)
+                .setTheme(R.style.AppTheme_FloatActionItem)
+                .create());
+
+        speedDialView.addActionItem(new SpeedDialActionItem.Builder(R.id.fab_action_turn_left,
+                R.drawable.crop_image)
+                .setLabel(R.string.turn_left)
+                .setTheme(R.style.AppTheme_FloatActionItem)
+                .create());
 
         speedDialView.addActionItem(new SpeedDialActionItem.Builder(R.id.fab_action_crop,
                 R.drawable.crop_image)
                 .setLabel(R.string.crop)
-                .setTheme(R.style.AppTheme_FloatActionItem)
-                .create());
-
-        speedDialView.addActionItem(new SpeedDialActionItem.Builder(R.id.fab_action_cancel_crop,
-                R.drawable.cancel)
-                .setLabel(R.string.cancel)
                 .setTheme(R.style.AppTheme_FloatActionItem)
                 .create());
 
@@ -73,20 +81,25 @@ public class CropImageActivity extends AppCompatActivity implements SpeedDialVie
 
                 mCropView.cropAsync(new CropCallback() {
                     @Override public void onSuccess(Bitmap cropped) {
-                        Photography photography = new Photography(CropImageActivity.this);
-                        photography.setFotografia(cropped);
-                        photography.save();
-                        Toast.makeText(CropImageActivity.this,"Croped",Toast.LENGTH_LONG).show();
+                        Intent returnIntent = new Intent();
+                        returnIntent.putExtra(MainActivity.REQUEST_RESULT,cropped);
+                        setResult(RESULT_OK, returnIntent);
+                        finish();
                     }
 
                     @Override public void onError(Throwable e) {
+                        Snackbar.make(mCropView, "Ocurrió un error al recortar la fotografía.", Snackbar.LENGTH_LONG).show();
                     }
                 });
 
                 return false;
 
-            case R.id.fab_action_cancel_crop:
+            case R.id.fab_action_turn_right:
+                mCropView.rotateImage(CropImageView.RotateDegrees.ROTATE_90D);
+                return false;
 
+            case R.id.fab_action_turn_left:
+                mCropView.rotateImage(CropImageView.RotateDegrees.ROTATE_M90D);
                 return false;
 
             default:

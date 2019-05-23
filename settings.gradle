@@ -1,2 +1,2 @@
-include ':app', ':photography', ':imageprocessing', ':analyzecolor'
+include ':app', ':photography', ':imageprocessing', ':analyzecolor', ':pupilsegmentation'
 include ':openCVLibrary410'

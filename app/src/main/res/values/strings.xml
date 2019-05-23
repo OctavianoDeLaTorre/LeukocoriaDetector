@@ -37,7 +37,10 @@
     <string name="ojo_con_leucocoria">Ejemplo de ojo con leucocoria</string>
 
     <string name="crop">Recortar</string>
-    <string name="cancel">Recortar</string>
+    <string name="cancel">Cancelar</string>
+
+    <string name="turn_right">Girar 90°</string>
+    <string name="turn_left">Girar -90°</string>
 
 
 
