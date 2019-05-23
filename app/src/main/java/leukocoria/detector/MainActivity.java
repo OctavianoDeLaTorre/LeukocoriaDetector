@@ -2,9 +2,11 @@ package leukocoria.detector;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -105,6 +107,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             photography.loadFromCamera();
+
         } else if (id == R.id.nav_gallery) {
             photography.loadFromGallery();
         }else if (id == R.id.nav_manage) {
@@ -135,7 +138,8 @@ public class MainActivity extends AppCompatActivity
                         Toast.LENGTH_SHORT).show();
             }
         } else if(id == R.id.nav_ayuda){
-            startActivity(new Intent(MainActivity.this,InfoRBActivity.class));
+            startActivity(new Intent(MainActivity.this,CropImageActivity.class));
+            //startActivity(new Intent(MainActivity.this,InfoRBActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -168,11 +172,4 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public void requestPermissions(){
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA )
-                == PackageManager.PERMISSION_GRANTED) {
-        } else {
-            ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE,1);
-        }
-    }
 }

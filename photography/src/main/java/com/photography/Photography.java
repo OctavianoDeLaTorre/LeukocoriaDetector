@@ -27,13 +27,19 @@ public class Photography {
     private SimpleDateFormat df;
     private Bitmap fotografia;
 
+    private Uri selectedImage;
+
     /**
-     * COnstructor
+     * Constructor
      * @param activity Context de activity
      */
     public Photography(Activity activity) {
         this.activity = activity;
         df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-­ss");
+    }
+
+    public Uri getSelectedImage() {
+        return selectedImage;
     }
 
     /**
@@ -110,9 +116,6 @@ public class Photography {
      * un bitmat.
      */
     public boolean getBitmat(Intent data) {
-        Uri selectedImageUri = null;
-        Uri selectedImage;
-        String filePath = null;
         selectedImage = data.getData();
         String selectedPath = selectedImage.getPath();
         if (selectedPath != null) {

@@ -31,4 +31,6 @@ dependencies {
     implementation project(path: ':photography')
     implementation project(path: ':imageprocessing')
     implementation project(path: ':analyzecolor')
+    implementation 'com.isseiaoki:simplecropview:1.1.7'
+    implementation "com.leinardi.android:speed-dial:2.0.1"
 }
