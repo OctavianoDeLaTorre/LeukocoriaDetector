@@ -16,14 +16,17 @@ import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
 import com.photography.Photography;
 
+import image.processing.ImageConvert;
+
 
 public class CropImageActivity extends AppCompatActivity implements SpeedDialView.OnActionSelectedListener{
 
     private CropImageView mCropView;
+    private SpeedDialView speedDialView;
     private LoadCallback loadCallback = new LoadCallback() {
         @Override
         public void onSuccess() {
-            Snackbar.make(mCropView, "Es recomendable recortar la fotografía para facilitar el análisis", Snackbar.LENGTH_LONG).show();
+            //Snackbar.make(speedDialView, "Es recomendable recortar la fotografía para facilitar el análisis", Snackbar.LENGTH_LONG).show();
 
         }
 
@@ -49,7 +52,7 @@ public class CropImageActivity extends AppCompatActivity implements SpeedDialVie
         mCropView.load(imageUri).execute(loadCallback);
 
 
-        SpeedDialView speedDialView = findViewById(R.id.speedDial);
+        speedDialView = findViewById(R.id.speedDial);
 
         speedDialView.addActionItem(new SpeedDialActionItem.Builder(R.id.fab_action_turn_right,
                 R.drawable.crop_image)
@@ -82,7 +85,7 @@ public class CropImageActivity extends AppCompatActivity implements SpeedDialVie
                 mCropView.cropAsync(new CropCallback() {
                     @Override public void onSuccess(Bitmap cropped) {
                         Intent returnIntent = new Intent();
-                        returnIntent.putExtra(MainActivity.REQUEST_RESULT,cropped);
+                        returnIntent.putExtra(MainActivity.REQUEST_RESULT, ImageConvert.compressBitmat(cropped));
                         setResult(RESULT_OK, returnIntent);
                         finish();
                     }

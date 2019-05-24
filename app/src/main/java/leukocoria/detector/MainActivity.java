@@ -29,6 +29,9 @@ import com.photography.SharePhotography;
 
 import org.opencv.android.OpenCVLoader;
 
+import image.processing.ImageConvert;
+import pupil.segmentation.PupilSegmetation;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -57,8 +60,11 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                PupilSegmetation ps = new PupilSegmetation();
+
+                imageBitmap = ps.segmentPupil(photography.getFotografia());
+
+                ivImage.setImageBitmap(imageBitmap);
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -179,7 +185,7 @@ public class MainActivity extends AppCompatActivity
 
                 case REQUEST_CODE_CROP_IMAGE:
                     Bundle extra = data.getExtras();
-                    photography.setFotografia((Bitmap) extra.get(REQUEST_RESULT));
+                    photography.setFotografia(ImageConvert.unCompressBitmat((byte[]) extra.get(REQUEST_RESULT)));
                     ivImage.setImageBitmap(photography.getFotografia());
                     break;
 
