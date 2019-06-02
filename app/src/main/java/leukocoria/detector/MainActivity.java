@@ -2,7 +2,9 @@ package leukocoria.detector;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity
     private Photography photography;
     private ImageView ivImage;
     private Bitmap imageBitmap;
+    private PupilSegmetation pupilSegmetation;
 
     private static boolean initOpenCV = false;
 
@@ -56,17 +59,18 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        pupilSegmetation = new PupilSegmetation();
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PupilSegmetation ps = new PupilSegmetation();
-
-                imageBitmap = ps.segmentPupil(photography.getFotografia());
-
+                imageBitmap = pupilSegmetation.segmentPupil(photography.getFotografia());
                 ivImage.setImageBitmap(imageBitmap);
             }
         });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -76,10 +80,10 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         final Activity activity =  MainActivity.this;
-
         photography = new Photography(activity);
         ivImage = findViewById(R.id.image);
     }
+
 
     @Override
     public void onBackPressed() {

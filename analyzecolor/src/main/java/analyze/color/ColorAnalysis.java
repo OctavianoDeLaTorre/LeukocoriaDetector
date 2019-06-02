@@ -10,9 +10,9 @@ public class ColorAnalysis {
      * Escala de colores segun el nivel el grado de la
      * leucocoria.
      */
-    public static final Scalar LEUKOCORIA_LEVEL_LOW [] = new Scalar[]{new Scalar(110,50,50),new Scalar(130,255,255)};
-    public static final Scalar LEUKOCORIA_LEVEL_MEDIUM [] = new Scalar[]{new Scalar(0,20,61), new Scalar(60,37,80)};
-    public static final Scalar LEUKOCORIA_LEVEL_HIGH [] = new Scalar[]{new Scalar(0,0,81), new Scalar(60,19,100)};
+    public static final Scalar LEUKOCORIA_LEVEL_LOW [] = new Scalar[]{new Scalar(0,97,127),new Scalar(30,153,153)};
+    public static final Scalar LEUKOCORIA_LEVEL_MEDIUM [] = new Scalar[]{new Scalar(0,51,153), new Scalar(30,97,204)};
+    public static final Scalar LEUKOCORIA_LEVEL_HIGH [] = new Scalar[]{new Scalar(0,0,204), new Scalar(30,51,255)};
 
     /**
      * Devuelve una máscara binaria, donde los píxeles blancos
