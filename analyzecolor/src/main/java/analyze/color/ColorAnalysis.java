@@ -22,7 +22,7 @@ public class ColorAnalysis {
      * @param level Rango de colores.
      * @return Máscara binaria.
      */
-    public static Mat analizarColor(Mat imagen, Scalar level[]){
+    public static Mat analyze(Mat imagen, Scalar level[]){
         Mat masck = new Mat();
         Mat imagenHSV = new Mat();
         Imgproc.cvtColor(imagen,imagenHSV,Imgproc.COLOR_BGR2HSV);

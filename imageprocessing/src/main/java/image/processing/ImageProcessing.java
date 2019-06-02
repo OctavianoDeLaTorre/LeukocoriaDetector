@@ -1,8 +1,8 @@
 package image.processing;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 
-import org.opencv.android.Utils;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
@@ -75,5 +75,31 @@ public class ImageProcessing {
         Mat matSala = new Mat();
         Imgproc.resize(mat,matSala, size);
         return matSala;
+    }
+
+    /**
+     * Cuenta los pixeles blancos de una
+     * mascara binaria.
+     * @param bitmap
+     * @return Num. de pixeles blancos
+     */
+    public int countWhitePixels(Bitmap bitmap) {
+        int r, g, b;
+        int colorPixel;
+        int numPixels = 0;
+
+        for(int x = 0; x <bitmap.getWidth(); x++){
+            for(int y = 0; y <bitmap.getHeight(); y++){
+                colorPixel = bitmap.getPixel(x,y);
+                r = Color.red(colorPixel);
+                g = Color.green(colorPixel);
+                b = Color.blue(colorPixel);
+
+                if (r == 255 && g == 255 && b == 255){
+                    numPixels++;
+                }
+            }
+        }
+        return numPixels;
     }
 }

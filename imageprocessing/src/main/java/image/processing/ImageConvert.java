@@ -32,6 +32,12 @@ public class ImageConvert {
         return bitmap;
     }
 
+    public static Bitmap toBitmap(Mat mat){
+        Bitmap bitmap = Bitmap.createBitmap(mat.width(),mat.height(),Bitmap.Config.ARGB_8888);
+        Utils.matToBitmap(mat, bitmap);
+        return bitmap;
+    }
+
     public static byte[] compressBitmat(Bitmap bitmap){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);

@@ -3,16 +3,12 @@ package leukocoria.detector;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,14 +20,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.photography.Photography;
 import com.photography.SharePhotography;
 
 import org.opencv.android.OpenCVLoader;
+import org.opencv.core.Mat;
 
+import analyze.color.ColorAnalysis;
 import image.processing.ImageConvert;
+import image.processing.ImageProcessing;
 import pupil.segmentation.PupilSegmetation;
 
 public class MainActivity extends AppCompatActivity
@@ -42,8 +42,10 @@ public class MainActivity extends AppCompatActivity
     public static final int REQUEST_CODE_CROP_IMAGE = 666;
     private Photography photography;
     private ImageView ivImage;
+    private TextView lblResult;
     private Bitmap imageBitmap;
     private PupilSegmetation pupilSegmetation;
+    private ImageProcessing imageProcessing;
 
     private static boolean initOpenCV = false;
 
@@ -60,14 +62,38 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        pupilSegmetation = new PupilSegmetation();
+        lblResult = findViewById(R.id.lblResuly);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        pupilSegmetation = new PupilSegmetation();
+        imageProcessing = new ImageProcessing();
+
+        final FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                imageBitmap = pupilSegmetation.segmentPupil(photography.getFotografia());
-                ivImage.setImageBitmap(imageBitmap);
+
+                if (photography.getFotografia() != null) {
+                    imageBitmap = pupilSegmetation.segmentPupil(photography.getFotografia());
+                    ivImage.setImageBitmap(imageBitmap);
+
+                    Mat leuLow = ColorAnalysis.analyze(ImageConvert.toMat(photography.getFotografia()),ColorAnalysis.LEUKOCORIA_LEVEL_LOW);
+                    Mat leuMed = ColorAnalysis.analyze(ImageConvert.toMat(photography.getFotografia()),ColorAnalysis.LEUKOCORIA_LEVEL_MEDIUM);
+                    Mat leuHig = ColorAnalysis.analyze(ImageConvert.toMat(photography.getFotografia()),ColorAnalysis.LEUKOCORIA_LEVEL_HIGH);
+
+                    int pixelsleuLow =  imageProcessing.countWhitePixels(ImageConvert.toBitmap(leuLow));
+                    int pixelsleuMed =  imageProcessing.countWhitePixels(ImageConvert.toBitmap(leuMed));
+                    int pixelsleuHig =  imageProcessing.countWhitePixels(ImageConvert.toBitmap(leuHig));
+
+                    String result =  "Resultado:\n\n" +
+                            "Numero de pixeles leucocoria nivel 1: " + pixelsleuLow + "\n" +
+                            "Numero de pixeles leucocoria nivel 2: " + pixelsleuMed + "\n" +
+                            "Numero de pixeles leucocoria nivel 3: " + pixelsleuHig;
+                    createSimpleDialog("Resultado",result).show();
+                    lblResult.setText(result);
+                } else {
+                    Snackbar.make(fab, "Sin imagen a analizar...", Snackbar.LENGTH_LONG).show();
+                }
+
             }
         });
 
@@ -82,6 +108,18 @@ public class MainActivity extends AppCompatActivity
         final Activity activity =  MainActivity.this;
         photography = new Photography(activity);
         ivImage = findViewById(R.id.image);
+    }
+
+    public AlertDialog createSimpleDialog(String title,String msg) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title)
+                .setMessage(msg)
+                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                    }
+                });
+
+        return builder.create();
     }
 
 
@@ -150,9 +188,11 @@ public class MainActivity extends AppCompatActivity
                         R.string.imagen_null,
                         Toast.LENGTH_SHORT).show();
             }
-        } else if(id == R.id.nav_ayuda){
-            startActivity(new Intent(MainActivity.this,CropImageActivity.class));
-            //startActivity(new Intent(MainActivity.this,InfoRBActivity.class));
+        } else if (id == R.id.nav_ayuda){
+            //startActivity(new Intent(MainActivity.this,CropImageActivity.class));
+            startActivity(new Intent(MainActivity.this,InfoRBActivity.class));
+        } else if (id == R.id.nav_about){
+            createSimpleDialog("Acerca de","Detector de retibloblastoma. \n Vesion: beta 1").show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -163,7 +203,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
 
         if(resultCode == RESULT_OK){
 
