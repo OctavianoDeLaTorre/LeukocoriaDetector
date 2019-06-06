@@ -45,7 +45,7 @@
         android:icon="@android:drawable/ic_menu_help"
         android:title="@string/Ayuda" />
     <item
-        android:id="@+id/nav_acerca"
+        android:id="@+id/nav_about"
         android:icon="@android:drawable/ic_menu_info_details"
         android:title="@string/Acerca" />
 

@@ -84,10 +84,14 @@ public class MainActivity extends AppCompatActivity
                     int pixelsleuMed =  imageProcessing.countWhitePixels(ImageConvert.toBitmap(leuMed));
                     int pixelsleuHig =  imageProcessing.countWhitePixels(ImageConvert.toBitmap(leuHig));
 
-                    String result =  "Resultado:\n\n" +
-                            "Numero de pixeles leucocoria nivel 1: " + pixelsleuLow + "\n" +
-                            "Numero de pixeles leucocoria nivel 2: " + pixelsleuMed + "\n" +
-                            "Numero de pixeles leucocoria nivel 3: " + pixelsleuHig;
+                    int pixels = pixelsleuLow + pixelsleuMed + pixelsleuHig;
+
+                    String result =  "Total de pixeles encontrados: " + pixels + "\n" +
+                            "Grado de avance de retinoblastoma: \n"+
+                            "Nivel 1: " + promedio(pixels,pixelsleuLow) + "%\n" +
+                            "Nivel 2: " +  promedio(pixels,pixelsleuMed) + "%\n" +
+                            "Nivel 3: " +  promedio(pixels,pixelsleuHig) + "%";
+
                     createSimpleDialog("Resultado",result).show();
                     lblResult.setText(result);
                 } else {
@@ -122,6 +126,9 @@ public class MainActivity extends AppCompatActivity
         return builder.create();
     }
 
+    public double promedio(int total, int res){
+        return Math.round(res*100/total);
+    }
 
     @Override
     public void onBackPressed() {
