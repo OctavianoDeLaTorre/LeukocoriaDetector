@@ -30,7 +30,7 @@ public class PupilSegmetation {
             Imgproc.circle(src, center, 1, new Scalar(0,255,0), 3, 8, 0 );
             // circle outline
             int radius = (int) Math.round(c[2]);
-            Imgproc.circle(src, center, radius, new Scalar(255,0,0), 2, 8, 0 );
+            Imgproc.circle(src, center, radius, new Scalar(0,255,0), 2, 8, 0 );
         }
 
         return ImageConvert.toBitmap(src,imgBitmat);
