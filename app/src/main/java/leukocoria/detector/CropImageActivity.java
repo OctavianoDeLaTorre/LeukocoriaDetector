@@ -47,13 +47,13 @@ public class CropImageActivity extends AppCompatActivity implements SpeedDialVie
             imageUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.ojo);
         }
 
+        //Load image on CropView
         mCropView = findViewById(R.id.cropImageView);
-
+        mCropView.setCropMode(CropImageView.CropMode.CIRCLE);
         mCropView.load(imageUri).execute(loadCallback);
 
-
+        //Add options on FloatBotton
         speedDialView = findViewById(R.id.speedDial);
-
         speedDialView.addActionItem(new SpeedDialActionItem.Builder(R.id.fab_action_turn_right,
                 R.drawable.crop_image)
                 .setLabel(R.string.turn_right)
@@ -81,7 +81,7 @@ public class CropImageActivity extends AppCompatActivity implements SpeedDialVie
     public boolean onActionSelected(SpeedDialActionItem actionItem) {
         switch (actionItem.getId()){
             case R.id.fab_action_crop:
-
+                //Crop image
                 mCropView.cropAsync(new CropCallback() {
                     @Override public void onSuccess(Bitmap cropped) {
                         Intent returnIntent = new Intent();
