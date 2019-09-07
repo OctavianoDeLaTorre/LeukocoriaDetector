@@ -73,8 +73,8 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
 
                 if (photography.getFotografia() != null) {
-                    imageBitmap = pupilSegmetation.segmentPupil(photography.getFotografia());
-                    ivImage.setImageBitmap(imageBitmap);
+                    //imageBitmap = pupilSegmetation.segmentPupil(photography.getFotografia());
+                    ivImage.setImageBitmap(photography.getFotografia());
 
                     Mat leuLow = ColorAnalysis.analyze(ImageConvert.toMat(photography.getFotografia()),ColorAnalysis.LEUKOCORIA_LEVEL_LOW);
                     Mat leuMed = ColorAnalysis.analyze(ImageConvert.toMat(photography.getFotografia()),ColorAnalysis.LEUKOCORIA_LEVEL_MEDIUM);
@@ -88,9 +88,15 @@ public class MainActivity extends AppCompatActivity
 
                     String result =  "Total de pixeles encontrados: " + pixels + "\n" +
                             "Grado de avance de retinoblastoma: \n"+
-                            "Nivel 1: " + promedio(pixels,pixelsleuLow) + "%\n" +
-                            "Nivel 2: " +  promedio(pixels,pixelsleuMed) + "%\n" +
-                            "Nivel 3: " +  promedio(pixels,pixelsleuHig) + "%";
+                            "Nivel 1: " + pixelsleuLow + "%\n" +
+                            "Nivel 2: " + pixelsleuMed + "%\n" +
+                            "Nivel 3: " + pixelsleuHig + "%";
+
+                    /**
+                     * "Nivel 1: " + promedio(pixels,pixelsleuLow) + "%\n" +
+                     *                             "Nivel 2: " +  promedio(pixels,pixelsleuMed) + "%\n" +
+                     *                             "Nivel 3: " +  promedio(pixels,pixelsleuHig) + "%";
+                     */
 
                     createSimpleDialog("Resultado",result).show();
                     lblResult.setText(result);
