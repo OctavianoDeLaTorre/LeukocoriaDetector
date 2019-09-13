@@ -35,7 +35,7 @@ public class ColorAnalysis {
         return masck;
     }
 
-    public Bitmap deleteBackColor(Bitmap image) {
+    public static Bitmap deleteBackColor(Bitmap image) {
         Bitmap imageResult = Bitmap.createBitmap(image.getWidth(), image.getHeight(), image.getConfig());
         int pixel;
         int pixelColors[];
@@ -44,8 +44,8 @@ public class ColorAnalysis {
             for (int y = 0; y < image.getHeight(); y++) {
                 pixel = image.getPixel(x, y);
                 pixelColors = getPixelColors(pixel);
-                if (pixelColors[0] == 0 && pixelColors[1] == 0 && pixelColors[2] == 0) {
-                    imageResult.setPixel(x, y, Color.argb(0, pixelColors[0], pixelColors[1], pixelColors[2]));
+                if (pixelColors[0] <= 50 && pixelColors[1] <= 50 && pixelColors[2] <= 50) {
+                    imageResult.setPixel(x, y, Color.argb(0, 0, 0, 0));
                 } else {
                     imageResult.setPixel(x, y, Color.argb(pixelColors[3], pixelColors[0], pixelColors[1], pixelColors[2]));
                 }
@@ -55,7 +55,7 @@ public class ColorAnalysis {
         return imageResult;
     }
 
-    private int[] getPixelColors(int pixel) {
+    private static int[] getPixelColors(int pixel) {
         return new int[]{Color.red(pixel), Color.green(pixel), Color.blue(pixel), Color.alpha(pixel)};
     }
 }

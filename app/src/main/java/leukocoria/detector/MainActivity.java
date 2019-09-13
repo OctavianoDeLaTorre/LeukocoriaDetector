@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity
 
                 if (photography.getFotografia() != null) {
                     //imageBitmap = pupilSegmetation.segmentPupil(photography.getFotografia());
-                    ivImage.setImageBitmap(photography.getFotografia());
+                    ivImage.setImageBitmap(ColorAnalysis.deleteBackColor(photography.getFotografia()));
 
                     Mat leuLow = ColorAnalysis.analyze(ImageConvert.toMat(photography.getFotografia()),ColorAnalysis.LEUKOCORIA_LEVEL_LOW);
                     Mat leuMed = ColorAnalysis.analyze(ImageConvert.toMat(photography.getFotografia()),ColorAnalysis.LEUKOCORIA_LEVEL_MEDIUM);
